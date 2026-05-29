@@ -185,7 +185,7 @@ enum class LocString(val ru: String, val en: String) {
     SLOT_NAME("Имя слота DSU", "DSU Slot Name"),
     
     LAUNCH_DSU("Запустить DSU", "Launch DSU"),
-    COPY_ADB_CMD("📋 Команды для ручного ввода", "📋 Commands for Manual Entry"),
+    COPY_ADB_CMD("Команды для ADB", "ADB Commands"),
     
     HOW_IT_WORKS("Как это работает", "How it works"),
     STEPS_DESC(
@@ -278,7 +278,7 @@ fun OriginDsuApp() {
     val context = LocalContext.current
     
     var userdataGb by remember { mutableStateOf(8f) }
-    var slotName by remember { mutableStateOf("dsu") }
+    val slotName = "dsu"
     var showDialog by remember { mutableStateOf(false) }
     var showAdbDialog by remember { mutableStateOf(false) }
     
@@ -369,9 +369,7 @@ fun OriginDsuApp() {
             } else {
                 SettingsCard(
                     userdataGb = userdataGb,
-                    onUserdataChange = { userdataGb = it },
-                    slotName = slotName,
-                    onSlotNameChange = { slotName = it }
+                    onUserdataChange = { userdataGb = it }
                 )
 
                 // Action Buttons
@@ -761,15 +759,6 @@ fun InfoCard(
                 if (hasDynamicPartitions) "Да" else "Нет",
                 valueColor = if (hasDynamicPartitions) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
             )
-            InfoRow(
-                loc(LocString.DSU_MODE),
-                if (isDsuActive) {
-                    loc(LocString.DSU_ACTIVE)
-                } else {
-                    if (isDsuInstalled) loc(LocString.DSU_PREPARED) else loc(LocString.DSU_INACTIVE)
-                },
-                valueColor = if (isDsuActive || isDsuInstalled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
-            )
         }
     }
 }
@@ -812,9 +801,7 @@ fun InfoRow(
 @Composable
 fun SettingsCard(
     userdataGb: Float,
-    onUserdataChange: (Float) -> Unit,
-    slotName: String,
-    onSlotNameChange: (String) -> Unit
+    onUserdataChange: (Float) -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -870,15 +857,6 @@ fun SettingsCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
-            OutlinedTextField(
-                value = slotName,
-                onValueChange = onSlotNameChange,
-                label = { Text(loc(LocString.SLOT_NAME)) },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp)
-            )
         }
     }
 }
