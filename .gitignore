@@ -1,0 +1,23 @@
+# Gradle
+.gradle/
+build/
+app/build/
+/build
+/app/build
+
+# IDE configurations
+.idea/
+*.iml
+.gradle-work/
+
+# Local device-specific files
+local.properties
+
+# Log files
+*.log
+
+# Built artifacts
+*.apk
+*.aar
+*.jar
+app/build/outputs/
